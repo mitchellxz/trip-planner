@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics
-from .serializers import UserSerializer, NoteSerializer
+from .serializers import UserSerializer, NoteSerializer, CountrySerializer, CitySerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import Note
+from .models import Note, Country, City
 
 
 class NoteListCreate(generics.ListCreateAPIView):
@@ -34,3 +34,18 @@ class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
+
+
+class CountryListView(generics.ListAPIView):
+    serializer_class = CountrySerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        return Country.objects.all()
+    
+class CityListView(generics.ListAPIView):
+    serializer_class = CitySerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        return City.objects.all()

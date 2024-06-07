@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Note
+from .models import Note, Country, City
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -20,3 +20,17 @@ class NoteSerializer(serializers.ModelSerializer):
         model = Note
         fields = ["id", "title", "content", "created_at", "author"]
         extra_kwargs = {"author": {"read_only": True}}
+
+
+class CitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = City
+        fields = ['id', 'name', 'country']
+
+
+class CountrySerializer(serializers.ModelSerializer):
+    #cities = CitySerializer(many=True, read_only=True)
+    class Meta:
+        model = Country
+        fields = ["id", "name", "monthly_weather_avg"]
+
